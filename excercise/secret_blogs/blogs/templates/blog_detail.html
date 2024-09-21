@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+             <!-- Blog content (initially visible) -->
+            <div id="view-mode">
+                <div class="d-flex justify-content-between">
+                    <h1 class="mb-4">{{ blog.title }}</h1>
+                    <!-- 
+                        ซ่อนปุ่ม สร้าง blog และปุ่มสร้าง category ให้แสดงเฉพาะ role ที่มีสิทธิ์เท่านั้น 
+                        และให้่แสดงเฉพาะ ปุ่มแก้ไข/ลบ เฉพาะ user ที่เป็นเข้าของ blog เท่านั้น
+                        และแสดงปุ่มลบเฉพาะ user ที่มีสิิทธิ์ Admin
+
+                       ** Hitt: user.is_staff, user == author
+                    -->
+                        <div class="btn-group">
+                            <button class="btn sm btn-warning m-2" id="edit-btn">Edit</button>
+                        
+                            <button class="btn sm btn-danger m-2">
+                                <a href="{% url 'blog-delete' blog.id %}" style="text-decoration: none; color:antiquewhite">Delete</a>
+                            </button>
+
+                        </div>
+                  
+                </div>
+                
+                <div class="create-box">
+                    <p class="text-muted">
+                        By {{ blog.author.username }} on {{ blog.created_at|date:"Y-m-d H:i" }}
+                    </p>
+                    <p>Catagories: </p>
+                    <div class="d-flex align-items-center">
+                        {% for category in blog.categories.all %}
+                        <div style="background-color: {{category.color}} !important;" class="p-1 mx-1">
+                            {{category.name}}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr>
+                <div class="content">
+                    {{ blog.content|safe }}
+                </div>
+                <hr>
+                <a href="{% url 'blog-list' %}" class="btn btn-primary mt-3">Back to Blog List</a>
+            </div>
+            
+            <!-- Edit Mode -->
+            <div id="edit-mode" style="display: none;">
+                <form action="{% url 'blog-edit' blog.id %}" method="post">
+                    {% csrf_token %}
+                    <label class=""><h1>Title</h1></label>
+                    <div class="title py-1 pb-2">
+                        {{ form.title }}
+                        {{ form.title.errors }}
+                    </div>
+                    {{ form.content.label }}
+                    <div class="conent py-1">
+                        {{ form.content }}
+                        {{ form.content.errors }}
+                    </div>
+
+                    {{ form.categories.label }}
+                    <div class="categories py-1">
+                        {{ form.categories }}
+                        {{ form.categories.errors }}
+                    </div>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('edit-btn').addEventListener('click', function() {
+        document.getElementById('view-mode').style.display = 'none';
+        document.getElementById('edit-mode').style.display = 'block';
+    });
+
+    document.getElementById('cancel-btn').addEventListener('click', function() {
+        document.getElementById('edit-mode').style.display = 'none';
+        document.getElementById('view-mode').style.display = 'block';
+    });
+</script>
+
+{% endblock %}

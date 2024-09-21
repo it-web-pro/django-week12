@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %} Blogs List {% endblock %}
+{% block content %}
+<h1 class="mb-4">Blog List</h1>
+<div class="row pb-2">
+    <!-- ซ่อนปุ่ม สร้าง blog และปุ่มสร้าง category ให้แสดงเฉพาะ role ที่มีสิทธิ์เท่านั้น -->
+
+    <div class="col">
+        <!-- btn for create blog -->
+        <a type="button" class="btn btn-primary" href="{% url 'blog-create' %}">Create</a>
+    </div>
+
+    <div class="col">
+        <!-- btn for manage category -->
+        <a type="button" class=" btn btn-info text-white" href="{% url 'category-list' %}" >Blog Category</a>
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Categories</th>
+                    <th scope="col">Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for blog in blogs %}
+                <tr>
+                    <td><a href="{% url 'blog-detail' blog.id %}">{{blog.title }}</a></td>
+                    <td>{{ blog.author.username }}</td>
+                    <td>{{blog.get_str_categorise}}</td>
+                    <td>{{ blog.created_at|date:"Y-m-d H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center">No blog posts available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %} Category List {% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex">
+                <h1 class="mb-4">Category List</h1>
+                {% include 'create_dialog.html' %}
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    {% for form in forms %}
+    <div class="row py-1">
+        <div class="col">
+            <div class="border border-dark p-3 ">
+                <!-- View Model -->
+                <div id="view-mode-{{form.instance.id}}" >
+                    <div class="d-flex justify-content-between">
+                        <div class="">
+                            <p>Name: </p>
+                            <h5>{{form.instance.name}}</h5>
+                        </div>
+                        <div class="">
+                            <p for="">Color: </p>
+                            <input type="color" class="form-control form-control-color" id="favcolor" name="favcolor" value="{{form.instance.color}}" disabled>
+                        </div>
+                        <div class="">
+                            <button type="button" class="btn btn-warning" id="edit-btn-{{form.instance.id}}">Edit</button>
+                            <a href="{% url 'category-delete' form.instance.id %}" type="button" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Mode -->
+                <div id="edit-mode-{{form.instance.id}}"  style="display: none !important;">
+                    <form action="{% url 'category-edit' form.instance.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                            <div class="name">
+                                <p>Name: </p>
+                                <h5>{{form.name}}</h5>
+                            </div>
+                            <div class="input-color">
+                                <p for="color">Color: </p>
+                                <input type="color" class="form-control form-control-color" name="color" value="{{form.instance.color}}">
+                            </div>
+
+                            {% if form.form.non_field_errors%}
+                            <div class="error_fields">
+                                {{ form.form.non_field_errors }}
+                            </div>
+                            {% endif %}
+
+                            <div class="btns-group">
+                                <button type="submit" class="btn btn-success">Save</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-btn-{{form.instance.id}}">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% for form in forms %}
+<script>
+    document.getElementById('edit-btn-{{form.instance.id}}').addEventListener('click', function() {
+        document.getElementById('view-mode-{{form.instance.id}}').style.display = 'none';
+        document.getElementById('edit-mode-{{form.instance.id}}').style.display = 'block';
+    });
+
+    document.getElementById('cancel-btn-{{form.instance.id}}').addEventListener('click', function() {
+        document.getElementById('edit-mode-{{form.instance.id}}').style.display = 'none';
+        document.getElementById('view-mode-{{form.instance.id}}').style.display = 'block';
+    });
+</script>
+{% endfor %}
+
+{% endblock %}

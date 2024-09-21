@@ -1,0 +1,27 @@
+<div class="p-2">
+    <!-- <button type="button" class="btn btn-sm btn-success p-1">Create Category</button> -->
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">New Category</a>
+    <div class="row">
+        <div class="col">
+          <div class="collapse multi-collapse" id="multiCollapseExample1">
+            <div class="card card-body">
+                <form action="{% url 'category-create' %}" method="post">
+                    {% csrf_token %}
+                    <div class="category-form">
+                        <div class="name-input py-2">
+                            <label for="name-input">Name</label>
+                            <input class="form-control" type="text" name="name" placeholder="category name">
+                        </div>
+
+                        <div class="color-input">
+                            <label for="color-input">Color</label>
+                            <input type="color" class="form-control form-control-color" name="color" value="#FFF0FF">
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-success py-2">Save</button>
+                </form>
+            </div>
+          </div>
+     </div>
+</div>
