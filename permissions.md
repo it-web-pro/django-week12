@@ -19,14 +19,18 @@ Django มีระบบ built-in permissions system ซึ่งจะสา�
 เนื่องจาก User object จะมี M2M relationship - `groups` และ `user_permissions` ดังนั้นการ add/remove relationships สามารถทำได้ดังตัวอย่าง
 
 ```text
+// User + Group
 myuser.groups.set([group_list])
 myuser.groups.add(group, group, ...)
 myuser.groups.remove(group, group, ...)
 myuser.groups.clear()
+// User + Permission
 myuser.user_permissions.set([permission_list])
 myuser.user_permissions.add(permission, permission, ...)
 myuser.user_permissions.remove(permission, permission, ...)
 myuser.user_permissions.clear()
+// Group + Permission
+mygroup.permissions.add(perm1, perm2)
 ```
 
 และการตรวจสอบว่า user ที่ login นั้นมี permission ที่เหมาะสมหรือไม่สามารถทำได้โดยใช้ method `has_perm()` เช่น

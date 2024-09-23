@@ -3,13 +3,13 @@
 !['use-case'](images/blogUsercase.png)
 
 ### ติดตั้งโปรเจค
-1. ให้นักศึกษาโหลดโฟลเดอร์โปรเจค secret_blogs จาก github
-2. แก้ไข settings.py
 
-    ติดตั้ง bootstrap5
-    ```sh
-    pip install django-bootstrap-v5
-    ```
+1. ให้นักศึกษาโหลดโฟลเดอร์โปรเจค secret_blogs จาก github
+    - เมื่อ download ลงมาแล้วสร้าง virtual environment ด้วยคำสั่ง `py -m venv myvenv`
+    - Activate virtual environment
+    - จากนั้นติดตั้ง `pip install django psycopg2`
+    - ติดตั้ง bootstrap5 `pip install django-bootstrap-v5`
+2. แก้ไข settings.py
 
     แก้ไข INSTALLED_APPS
 
@@ -55,13 +55,13 @@
 
 ## Path 1 Login
 
-1.1 แก้ไข views.py ของทุก app ในโปรเจคของเราให้ต้องมีการ login ก่อนถึงจะสามารถเข้าไปดูเว็บไซต์ได้ถ้า user ยังไม่ login ให้ redirect ไปที่หน้า login page ( "/authen/" ) และเมื่อกด logout บน navbar จะต้อง redirect ไปที่หน้า login
+1.1 แก้ไข views.py ของทุก app ในโปรเจคของเราให้ต้องมีการ login ก่อนถึงจะสามารถเข้าไปดูเว็บไซต์ได้ถ้า user ยังไม่ login ให้ redirect ไปที่หน้า login page ( "/authen/" ) และเมื่อกด logout บน navbar จะต้อง redirect ไปที่หน้า login (0.5 คะแนน)
 
 > **Hitt: LoginRequiredMixin
 
 ![login-form](images/login.png)
 
-1.2 ให้แก้ไขไฟล์ views.py ใน app `authen` ให้ลองรับการ login/logout
+1.2 ให้แก้ไขไฟล์ views.py ใน app `authen` ให้ลองรับการ login/logout (0.5 คะแนน)
 
 ```PYTHON
     class LoginView(View):
@@ -83,7 +83,7 @@
 
 ## Path 2 Permission
 
-2.1 สร้าง Group ให้กับระบบของเราในเว็บ Django admin โดยมี 3 groups คือ `Admin`, `Author`, `Viewer` โดยให้มี permission ดังนี้
+2.1 สร้าง Group ให้กับระบบของเราในเว็บ Django admin โดยมี 3 groups คือ `Admin`, `Author`, `Viewer` โดยให้มี permission ดังนี้ (0.25 คะแนน)
 
 > ถ้านักศึกษาไม่อยากใช้ Django admin สามารถเขียนโค้ดเพื่อสร้าง Group และเพิ่ม Permission แทนได้ครับ [Doc](https://docs.djangoproject.com/en/5.1/topics/auth/default/)
 
@@ -112,7 +112,7 @@
 
 
 
-2.2 กำหนด permission ให้กับไฟล์ views.py ของ app `blogs` และ `category` ให้ถูกต้อง
+2.2 กำหนด permission ให้กับไฟล์ views.py ของ app `blogs` และ `category` ให้ถูกต้อง (0.5 คะแนน)
 
 > **Hitt: PermissionRequiredMixin
 
@@ -120,7 +120,7 @@
 
 ![403](images/403.png)
 
-2.3 ซ่อนปุ่มใน app `blogs` ให้สามารถเห็นและกดได้เฉพาะ user ที่มี permission เท่านั้น
+2.3 ซ่อนปุ่มใน app `blogs` ให้สามารถเห็นและกดได้เฉพาะ user ที่มี permission เท่านั้น (0.25 คะแนน)
 
 > blog_list.html
 

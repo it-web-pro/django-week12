@@ -565,7 +565,7 @@ class BookingDelete(LoginRequiredMixin, PermissionRequiredMixin, View):
 </div>
 ...
 <td>
-    {% if perms.change_booking %}
+    {% if perms.bookings.change_booking %}
     <a class="button is-info" href="{% url 'booking-update' booking.id %}">Edit Booking</a>
     {% endif %}
     {% if perms.bookings.delete_booking %}
