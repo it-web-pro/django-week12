@@ -97,7 +97,8 @@
         - Add category
         - Change category
         - Delete category
-    
+     user ที่เป็น admin ให้มีสถานะเป็น Staff ของ website (is_staff)
+
     Author:
         - View blog
         - Add blog
